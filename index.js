@@ -1,27 +1,30 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const shareBtn = document.getElementsByClassName("share-span");
-  const sharePanel = document.getElementsByClassName("share-panel");
+  const shareBtn = document.getElementsByClassName("share-span")[0];
+  const sharePanel = document.getElementById("share-panel");
   const arrow = document.getElementById("arr");
-  const smallSharePanel =
-    document.getElementsByClassName("share-panel-small")[0];
-  shareBtn[0].addEventListener("click", function () {
-    if (
-      sharePanel[0].style.visibility === "visible" ||
-      smallSharePanel.style.visibility === "visible"
-    ) {
-      smallSharePanel.style.visibility = "hidden";
-      sharePanel[0].style.visibility = "hidden";
-      shareBtn[0].classList.remove("share-span-dark")
-      shareBtn[0].classList.remove("share-span-dark-small");
+  const pointer = document.getElementById("pointer");
+  shareBtn.addEventListener("click", function () {
+    if (sharePanel.classList.contains("share-hidden")) {
+      sharePanel.classList.remove("share-hidden");
       arrow.setAttribute("fill", "#6E8098");
-    } else if (screen.width < 600) {
-      smallSharePanel.style.visibility = "visible";
-      shareBtn[0].classList.add("share-span-dark-small");
-      arrow.setAttribute("fill", "white");
+      if (screen.width < 760) {
+        sharePanel.classList.add("share-panel-small");
+        shareBtn.classList.add("share-span-dark-small");
+        arrow.setAttribute("fill", "white");
+        pointer.classList.add("share-hidden");
+      } else {
+        sharePanel.classList.add("share-panel-large");
+        arrow.setAttribute("fill", "white");
+        shareBtn.classList.add("share-span-dark");
+      }
     } else {
-      sharePanel[0].style.visibility = "visible";
-      shareBtn[0].classList.add("share-span-dark");
-      arrow.setAttribute("fill", "white");
+      sharePanel.classList.add("share-hidden");
+      arrow.setAttribute("fill", "#6E8098");
+      shareBtn.classList.remove("share-span-dark");
+      shareBtn.classList.remove("share-span-dark-small");
+      sharePanel.classList.remove("share-panel-small");
+      sharePanel.classList.remove("share-panel-large");
+      pointer.classList.remove("share-hidden");
     }
   });
 });
